@@ -8,5 +8,3 @@ import contracts = require('./contracts');
 var app: contracts.IAngularApp = angular.module('app', ['ngResource', 'ngRoute', 'shell']);
 
 angular.bootstrap(document, ['app']);
-
-
