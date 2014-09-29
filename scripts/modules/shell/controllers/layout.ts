@@ -6,6 +6,6 @@ export interface ILayoutControllerScope extends ng.IScope {
 
 export function init(module: ng.IModule) {
     module.controller('layoutCtrl', ['$scope', function ($scope: ILayoutControllerScope) {
-        $scope.title = 'Layout Controller';
+        $scope.title = 'Layout Controller!!!';
     }]);
 }

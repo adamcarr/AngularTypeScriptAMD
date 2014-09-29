@@ -1,7 +1,9 @@
 .tscache
 node_modules
 dist
-bower_components
+lib
+bin
 scripts/**/*.js*
+scripts/.baseDir.ts
 .idea
 npm-debug.log

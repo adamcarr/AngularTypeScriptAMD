@@ -2,29 +2,46 @@ module.exports = function (grunt) {
     // load tasks
     require('load-grunt-tasks')(grunt);
 
+
+    var watchPort = 35729;
+
     // Configure grunt here
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-        BASE_PATH: './',
-        DIST_PATH: './dist/',
+
+        watch: {
+            options: {
+                livereload: watchPort
+            },
+            typescript: {
+                files: ['scripts/**/*.ts'],
+                tasks: ['ts']
+            },
+            ejs: {
+                files: ['./*.ejs'],
+                tasks: ['ejs:watch']
+            }
+        },
 
         requirejs: {
             compile: {
                 options: {
-                    baseUrl: "scripts",
-                    mainConfigFile: ['scripts/main.js'],
+                    baseUrl: "dist/js",
+                    mainConfigFile: ['dist/js/main.js'],
                     //                    mainConfigFile: "path/to/config.js",
                     //                    name: "path/to/almond", // assumes a production build using almond
                     name: 'main',
                     paths: {
-                        requireLib: '../bower_components/requirejs/require'
+                        requireLib: '../../lib/requirejs/require',
+                        'angular': 'empty:',
+                        'angular-route': 'empty:',
+                        'angular-resource': 'empty:'
                     },
                     include: [
                         'requireLib'
-//                        'json'
                     ],
                     optimize: 'uglify2',
-                    out: "dist/main.js"
+                    out: "bin/main.js"
                 }
             }
         },
@@ -41,7 +58,7 @@ module.exports = function (grunt) {
                 //// If specified, generate an out.js file which is the merged js file
                 //out: 'test/out.js',
                 //// If specified, the generate JavaScript files are placed here. Only works if out is not specified
-                //outDir: 'test/outputdirectory',
+                outDir: 'dist/js/',
                 // If specified, watches this directory for changes, and re-runs the current target
                 //watch: 'test',
                 // Use to override the default options, http://gruntjs.com/configuring-tasks#options
@@ -56,18 +73,67 @@ module.exports = function (grunt) {
                     declaration: false,
                     // true (default) | false
                     removeComments: true
-                },
+                }
             }
-            // Another target
-            //dist: {
-            //    src: ["test/work/**/*.ts"],
-            //    // Override the main options for this target
-            //    options: {
-            //        sourceMap: false,
-            //    }
-            //},
+        },
+        ejs: {
+            watch: {
+                expand: true,
+                flatten: true,
+                src: './*.ejs',
+                dest: './dist/',
+                ext: '.html',
+                options: {
+                    watch: watchPort,
+                    prod: false
+                }
+            },
+            prod: {
+                expand: true,
+                flatten: true,
+                src: './*.ejs',
+                dest: './bin/',
+                ext: '.html',
+                options: {
+                    watch: false,
+                    prod: true
+                }
+            },
+            nowatch: {
+                expand: true,
+                flatten: true,
+                src: './*.ejs',
+                dest: './dist/',
+                ext: '.html',
+                options: {
+                    watch: false,
+                    prod: false
+                }
+            }
+        },
+        bower: {
+            install: {
+                options: {
+                    cleanup: true,
+                    targetDir: './lib'
+                }
+            }
+        },
+        copy: {
+            libjs: {
+                expand: true,
+                flatten: false,
+                cwd: './lib',
+                src: [
+                    '**'
+                ],
+                dest: './dist/js/lib/'
+            }
         }
     });
 
-    grunt.registerTask('default', ['ts', 'requirejs']);
+    grunt.registerTask('default', ['ts', 'copy', 'ejs:watch', 'watch']);
+    grunt.registerTask('dist:nowatch', ['ts', 'copy', 'ejs:nowatch'])
+    grunt.registerTask('prod', ['ts', 'copy', 'requirejs', 'ejs:prod']);
+    grunt.registerTask('install', ['bower']);
 };

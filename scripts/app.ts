@@ -1,6 +1,7 @@
 /// <reference path="../typings/tsd.d.ts" />
-
-declare var angular : ng.IAngularStatic;
+/// <amd-dependency path="angular" />
+/// <amd-dependency path="angular-resource" />
+/// <amd-dependency path="angular-route" />
 
 import shell = require('./modules/shell/index'); shell;
 import contracts = require('./contracts');

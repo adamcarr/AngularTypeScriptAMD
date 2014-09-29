@@ -1,6 +1,5 @@
 /// <reference path="../../../typings/tsd.d.ts" />
-
-declare var angular : ng.IAngularStatic;
+/// <amd-dependency path="angular" />
 
 import controllers = require('./controllers/index'); controllers;
 

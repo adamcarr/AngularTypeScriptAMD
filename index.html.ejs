@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <% if(typeof watch !== 'undefined' && watch){ %>
+
+    <script src="//localhost:<%= watch %>/livereload.js"></script>
+    <% } %>
+
+    <% if(typeof prod !== 'undefined' && prod) { %>
+
+    <script src="main.js"></script>
+    <% }else{ %>
+
+    <script src="js/lib/requirejs/require.js" data-main="js/main.js"></script>
+    <% } %>
+
+
+</head>
+<body>
+    <div data-ng-controller="layoutCtrl">
+        <h1>{{title}}</h1>
+    </div>
+</body>
+</html>
