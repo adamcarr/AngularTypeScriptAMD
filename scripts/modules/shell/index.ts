@@ -1,7 +1,6 @@
 /// <reference path="../../../typings/tsd.d.ts" />
 /// <amd-dependency path="angular" />
-
-import controllers = require('./controllers/index'); controllers;
+/// <amd-dependency path="./controllers/index" />
 
 var shell = angular.module('shell', ['shell.controllers']);
 

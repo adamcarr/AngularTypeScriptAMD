@@ -4,8 +4,11 @@ export interface ILayoutControllerScope extends ng.IScope {
     title?: string;
 }
 
-export function init(module: ng.IModule) {
-    module.controller('layoutCtrl', ['$scope', function ($scope: ILayoutControllerScope) {
-        $scope.title = 'Layout Controller!!!';
-    }]);
-}
+import coreServicesContracts = require('../../core/services/contracts');
+
+export function controller($scope: ILayoutControllerScope, logger: coreServicesContracts.ILoggerService) {
+    logger.log(() => {
+        return 'Rendering layout controller';
+    });
+    $scope.title = 'Layout Controller!!';
+};

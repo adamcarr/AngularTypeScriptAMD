@@ -7,3 +7,5 @@ scripts/**/*.js*
 scripts/.baseDir.ts
 .idea
 npm-debug.log
+testOut
+.grunt

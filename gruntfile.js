@@ -15,7 +15,7 @@ module.exports = function (grunt) {
             },
             typescript: {
                 files: ['scripts/**/*.ts'],
-                tasks: ['ts']
+                tasks: ['ts:build']
             },
             ejs: {
                 files: ['./*.ejs'],
@@ -74,6 +74,33 @@ module.exports = function (grunt) {
                     // true (default) | false
                     removeComments: true
                 }
+            },
+            test: {
+                // The source TypeScript files, http://gruntjs.com/configuring-tasks#files
+                src: ["tests/**/*.ts"],
+                // The source html files, https://github.com/grunt-ts/grunt-ts#html-2-typescript-support
+                //html: ["test/work/**/*.tpl.html"],
+                // If specified, generate this file that to can use for reference management
+                //reference: "./test/reference.ts",
+                //// If specified, generate an out.js file which is the merged js file
+                //out: 'test/out.js',
+                //// If specified, the generate JavaScript files are placed here. Only works if out is not specified
+                outDir: 'testOut/',
+                // If specified, watches this directory for changes, and re-runs the current target
+                //watch: 'test',
+                // Use to override the default options, http://gruntjs.com/configuring-tasks#options
+                options: {
+                    // 'es3' (default) | 'es5'
+                    target: 'es3',
+                    // 'amd' (default) | 'commonjs'
+                    module: 'amd',
+                    // true (default) | false
+                    sourceMap: true,
+                    // true | false (default)
+                    declaration: false,
+                    // true (default) | false
+                    removeComments: true
+                }
             }
         },
         ejs: {
@@ -111,6 +138,8 @@ module.exports = function (grunt) {
                 }
             }
         },
+
+
         bower: {
             install: {
                 options: {
@@ -119,6 +148,8 @@ module.exports = function (grunt) {
                 }
             }
         },
+
+
         copy: {
             libjs: {
                 expand: true,
@@ -129,11 +160,25 @@ module.exports = function (grunt) {
                 ],
                 dest: './dist/js/lib/'
             }
+        },
+
+
+        jasmine: {
+            tests: {
+                src: [
+                    'lib/requirejs/require.js'
+                ],
+                options: {
+                    specs: 'tests/**/*Spec.js',
+                    outfile: 'testOut/_SpecRunner.html',
+                    keepRunner: true
+                }
+            }
         }
     });
 
-    grunt.registerTask('default', ['ts', 'copy', 'ejs:watch', 'watch']);
-    grunt.registerTask('dist:nowatch', ['ts', 'copy', 'ejs:nowatch'])
-    grunt.registerTask('prod', ['ts', 'copy', 'requirejs', 'ejs:prod']);
+    grunt.registerTask('default', ['ts:build', 'copy', 'ejs:watch', 'watch']);
+    grunt.registerTask('dist:nowatch', ['ts:build', 'copy', 'ejs:nowatch'])
+    grunt.registerTask('prod', ['ts:build', 'copy', 'requirejs', 'ejs:prod']);
     grunt.registerTask('install', ['bower']);
 };

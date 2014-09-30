@@ -16,6 +16,10 @@
     "grunt-contrib-watch": "^0.6.1",
     "grunt-ejs": "^0.2.0",
     "grunt-ts": "^1.12.0",
-    "load-grunt-tasks": "^0.6.0"
+    "load-grunt-tasks": "^0.6.0",
+    "mocha": "~1.21.4",
+    "squire": "~1.1.8",
+    "jasmine": "~2.0.1",
+    "grunt-contrib-jasmine": "~0.8.0"
   }
 }
