@@ -53,6 +53,7 @@ module.exports = function (grunt) {
             build: {
                 src: ["scripts/**/*.ts"],
                 outDir: 'dist/js/',
+                html: 'scripts/**/*.html',
                 options: {
                     target: 'es3',          // 'es3' (default) | 'es5'
                     module: 'amd',          // 'amd' (default) | 'commonjs'

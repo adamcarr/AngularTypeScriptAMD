@@ -1,0 +1,1 @@
+module currentTime { export var html =  '<span>{{title | date:\'medium\'}}</span>' } 
