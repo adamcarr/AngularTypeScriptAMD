@@ -87,7 +87,7 @@ module.exports = function (grunt) {
                 //// If specified, generate an out.js file which is the merged js file
                 //out: 'test/out.js',
                 //// If specified, the generate JavaScript files are placed here. Only works if out is not specified
-                outDir: 'testOut/',
+                outDir: 'testOutput/',
                 // If specified, watches this directory for changes, and re-runs the current target
                 //watch: 'test',
                 // Use to override the default options, http://gruntjs.com/configuring-tasks#options
@@ -168,8 +168,8 @@ module.exports = function (grunt) {
         jasmine: {
             tests: {
                 options: {
-                    specs: 'testOut/**/*Spec.js',
-                    outfile: 'testOut/_SpecRunner.html',
+                    specs: 'testOutput/**/*Spec.js',
+                    outfile: 'testOutput/_SpecRunner.html',
                     keepRunner: true,
                     vendor: 'lib/*',
                     template: require('grunt-template-jasmine-requirejs'),
