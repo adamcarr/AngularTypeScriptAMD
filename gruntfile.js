@@ -1,15 +1,13 @@
 module.exports = function (grunt) {
-    // load tasks
     require('load-grunt-tasks')(grunt, {
-        pattern: ['grunt-*', '!grunt-template-jasmine-requirejs']
+        pattern: ['grunt-*', '!grunt-template-jasmine-requirejs'] // do not load grunt-template-jasmine-requirejs by default
     });
-
 
     var watchPort = 35729;
 
-    // Configure grunt here
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+
 
         watch: {
             options: {
@@ -25,13 +23,12 @@ module.exports = function (grunt) {
             }
         },
 
+
         requirejs: {
             compile: {
                 options: {
                     baseUrl: "dist/js",
                     mainConfigFile: ['dist/js/main.js'],
-                    //                    mainConfigFile: "path/to/config.js",
-                    //                    name: "path/to/almond", // assumes a production build using almond
                     name: 'main',
                     paths: {
                         requireLib: '../../lib/requirejs/require',
@@ -43,68 +40,41 @@ module.exports = function (grunt) {
                         'requireLib'
                     ],
                     optimize: 'uglify2',
-                    out: "bin/main.js"
+                    out: "bin/main.js",
+                    preserveLicenseComments: false,
+                    generateSourceMaps: true
                 }
             }
         },
 
+
         ts: {
             // A specific target
             build: {
-                // The source TypeScript files, http://gruntjs.com/configuring-tasks#files
                 src: ["scripts/**/*.ts"],
-                // The source html files, https://github.com/grunt-ts/grunt-ts#html-2-typescript-support
-                //html: ["test/work/**/*.tpl.html"],
-                // If specified, generate this file that to can use for reference management
-                //reference: "./test/reference.ts",
-                //// If specified, generate an out.js file which is the merged js file
-                //out: 'test/out.js',
-                //// If specified, the generate JavaScript files are placed here. Only works if out is not specified
                 outDir: 'dist/js/',
-                // If specified, watches this directory for changes, and re-runs the current target
-                //watch: 'test',
-                // Use to override the default options, http://gruntjs.com/configuring-tasks#options
                 options: {
-                    // 'es3' (default) | 'es5'
-                    target: 'es3',
-                    // 'amd' (default) | 'commonjs'
-                    module: 'amd',
-                    // true (default) | false
-                    sourceMap: true,
-                    // true | false (default)
-                    declaration: false,
-                    // true (default) | false
-                    removeComments: true
+                    target: 'es3',          // 'es3' (default) | 'es5'
+                    module: 'amd',          // 'amd' (default) | 'commonjs'
+                    sourceMap: true,        // true (default) | false
+                    declaration: false,     // true | false (default)
+                    removeComments: true    // true (default) | false
                 }
             },
             test: {
-                // The source TypeScript files, http://gruntjs.com/configuring-tasks#files
                 src: ["tests/**/*.ts"],
-                // The source html files, https://github.com/grunt-ts/grunt-ts#html-2-typescript-support
-                //html: ["test/work/**/*.tpl.html"],
-                // If specified, generate this file that to can use for reference management
-                //reference: "./test/reference.ts",
-                //// If specified, generate an out.js file which is the merged js file
-                //out: 'test/out.js',
-                //// If specified, the generate JavaScript files are placed here. Only works if out is not specified
                 outDir: 'testOutput/',
-                // If specified, watches this directory for changes, and re-runs the current target
-                //watch: 'test',
-                // Use to override the default options, http://gruntjs.com/configuring-tasks#options
                 options: {
-                    // 'es3' (default) | 'es5'
-                    target: 'es3',
-                    // 'amd' (default) | 'commonjs'
-                    module: 'amd',
-                    // true (default) | false
-                    sourceMap: true,
-                    // true | false (default)
-                    declaration: false,
-                    // true (default) | false
-                    removeComments: true
+                    target: 'es3',          // 'es3' (default) | 'es5'
+                    module: 'amd',          // 'amd' (default) | 'commonjs'
+                    sourceMap: true,        // true (default) | false
+                    declaration: false,     // true | false (default)
+                    removeComments: true    // true (default) | false
                 }
             }
         },
+
+
         ejs: {
             watch: {
                 expand: true,
@@ -182,6 +152,7 @@ module.exports = function (grunt) {
             }
         }
     });
+
 
     grunt.registerTask('default', ['ts:build', 'copy', 'ejs:watch', 'watch']);
     grunt.registerTask('dist:nowatch', ['ts:build', 'copy', 'ejs:nowatch'])
