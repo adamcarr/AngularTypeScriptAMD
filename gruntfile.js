@@ -1,6 +1,8 @@
 module.exports = function (grunt) {
     // load tasks
-    require('load-grunt-tasks')(grunt);
+    require('load-grunt-tasks')(grunt, {
+        pattern: ['grunt-*', '!grunt-template-jasmine-requirejs']
+    });
 
 
     var watchPort = 35729;
@@ -165,13 +167,17 @@ module.exports = function (grunt) {
 
         jasmine: {
             tests: {
-                src: [
-                    'lib/requirejs/require.js'
-                ],
                 options: {
-                    specs: 'tests/**/*Spec.js',
+                    specs: 'testOut/**/*Spec.js',
                     outfile: 'testOut/_SpecRunner.html',
-                    keepRunner: true
+                    keepRunner: true,
+                    vendor: 'lib/*',
+                    template: require('grunt-template-jasmine-requirejs'),
+                    templateOptions: {
+                        requireConfig: {
+                            baseUrl: ''
+                        }
+                   }
                 }
             }
         }
@@ -181,4 +187,5 @@ module.exports = function (grunt) {
     grunt.registerTask('dist:nowatch', ['ts:build', 'copy', 'ejs:nowatch'])
     grunt.registerTask('prod', ['ts:build', 'copy', 'requirejs', 'ejs:prod']);
     grunt.registerTask('install', ['bower']);
+    grunt.registerTask('test', ['ts:test', 'jasmine']);
 };
